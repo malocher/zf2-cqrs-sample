@@ -3,20 +3,115 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "9bf8687057fd0664fc5e7ed58504e9c0",
+    "hash": "f293bb072a5e306cd9778ae870358b16",
     "packages": [
         {
-            "name": "zendframework/zendframework",
-            "version": "2.2.4",
+            "name": "codeliner/zf2-cqrs-module",
+            "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/zendframework/zf2.git",
-                "reference": "5b03d868755c181fc9b5dc56c1f8c26e73ca0bed"
+                "url": "https://github.com/codeliner/zf2-cqrs-module.git",
+                "reference": "b6db7fe3bd3e6d04d341539aa07a7cfe7b125ffe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zf2/zipball/5b03d868755c181fc9b5dc56c1f8c26e73ca0bed",
-                "reference": "5b03d868755c181fc9b5dc56c1f8c26e73ca0bed",
+                "url": "https://api.github.com/repos/codeliner/zf2-cqrs-module/zipball/b6db7fe3bd3e6d04d341539aa07a7cfe7b125ffe",
+                "reference": "b6db7fe3bd3e6d04d341539aa07a7cfe7b125ffe",
+                "shasum": ""
+            },
+            "require": {
+                "crafics/cqrs-php": "dev-master",
+                "php": ">=5.4.0",
+                "zendframework/zendframework": "2.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "CqrsModule\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Alexander Miertsch",
+                    "email": "kontakt@codeliner.ws",
+                    "homepage": "http://www.codeliner.ws/"
+                }
+            ],
+            "description": "PHP CQRS integration for Zend Framework 2",
+            "homepage": "http://www.codeliner.ws/",
+            "keywords": [
+                "cqrs",
+                "framework",
+                "zf2"
+            ],
+            "time": "2013-10-08 18:45:26"
+        },
+        {
+            "name": "crafics/cqrs-php",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/crafics/cqrs-php.git",
+                "reference": "9590a02657c6476e53c25a2a392233ba530fc73e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/crafics/cqrs-php/zipball/9590a02657c6476e53c25a2a392233ba530fc73e",
+                "reference": "9590a02657c6476e53c25a2a392233ba530fc73e",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpunit/phpunit": "3.7.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Test\\": "tests/",
+                    "Iteration\\": "iterations/",
+                    "Cqrs\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Alexander Miertsch",
+                    "email": "kontakt@codeliner.ws",
+                    "homepage": "http://www.codeliner.ws/"
+                },
+                {
+                    "name": "Manfred Weber",
+                    "email": "crafics@php.net",
+                    "homepage": "http://dschini.org/"
+                }
+            ],
+            "description": "PHP CQRS Framework",
+            "homepage": "https://github.com/crafics/cqrs-php/",
+            "keywords": [
+                "cqrs",
+                "framework",
+                "php"
+            ],
+            "time": "2013-10-08 18:55:50"
+        },
+        {
+            "name": "zendframework/zendframework",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zendframework/zf2.git",
+                "reference": "73e0de644789aa5b712c97f55c512c57c2b9ac76"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zendframework/zf2/zipball/73e0de644789aa5b712c97f55c512c57c2b9ac76",
+                "reference": "73e0de644789aa5b712c97f55c512c57c2b9ac76",
                 "shasum": ""
             },
             "require": {
@@ -117,7 +212,7 @@
                 "framework",
                 "zf2"
             ],
-            "time": "2013-08-26 15:09:04"
+            "time": "2013-10-04 16:01:06"
         }
     ],
     "packages-dev": [
@@ -126,10 +221,10 @@
     "aliases": [
 
     ],
-    "minimum-stability": "stable",
-    "stability-flags": [
-
-    ],
+    "minimum-stability": "dev",
+    "stability-flags": {
+        "codeliner/zf2-cqrs-module": 20
+    },
     "platform": {
         "php": ">=5.3.3"
     },
