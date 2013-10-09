@@ -35,7 +35,7 @@ class TodoRepository
     public function __construct()
     {
         if (file_exists($this->storageFile)) {
-            $this->todosData = json_decode(file_get_contents($this->storageFile));
+            $this->todosData = json_decode(file_get_contents($this->storageFile), true);
         }
     }
     
@@ -53,8 +53,6 @@ class TodoRepository
         
         $this->todosData[$todo->getId()] = $todoPayload->getArrayCopy();
         $this->updateFile();
-        
-        
     }
     
  

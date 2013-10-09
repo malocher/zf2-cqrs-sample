@@ -54,7 +54,7 @@ class TodoController extends AbstractActionController
                 
                 $this->gate->getBus(DomainBus::NAME)->invokeCommand($createTodoCommand);
                 
-                $this->redirect()->toUrl('/application/todo');
+                return $this->redirect()->toUrl('/application/todo');
             } else {
                 return new ViewModel(['form' => $todoForm]);
             }

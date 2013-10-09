@@ -56,6 +56,13 @@ return array(
         'invokables' => array(
             'todo_reader_service' => 'Application\ReadModel\TodoReaderService'
         ),
+        'factories' => array(
+            'todo_repository' => function($sl) {
+                $todoRepository = new \Application\Domain\Repository\TodoRepository();
+                $todoRepository->setEntityFactory(new \Application\Domain\Entity\EntityFactory());
+                return $todoRepository;
+            }
+        ),
         'abstract_factories' => array(
             'Zend\Cache\Service\StorageCacheAbstractServiceFactory',
             'Zend\Log\LoggerAbstractServiceFactory',
@@ -108,6 +115,10 @@ return array(
                 'class' => 'Cqrs\Adapter\ArrayMapAdapter',
                 'buses' => array(
                     'Application\Cqrs\Bus\DomainBus' => array(
+                        'Application\Cqrs\Command\CreateTodoCommand' => array(
+                            'alias' => 'todo_repository',
+                            'method' => 'createTodo'
+                        ),
                         'Application\Cqrs\Query\GetAllOpenTodosQuery' => array(
                             'alias' => 'todo_reader_service',
                             'method' => 'getAllOpenTodos'
