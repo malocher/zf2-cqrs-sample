@@ -1,0 +1,21 @@
+<?php
+$form = $this->form;
+$form->prepare();
+
+$form->setAttribute('method', 'post');
+
+echo $this->form()->openTag($form);
+?>
+<div class="form_element">
+<?php
+    $title = $form->get('title');
+    echo $this->formRow($title);
+?></div>
+<div class="form_element">
+<?php
+    $description = $form->get('description');
+    echo $this->formRow($description);
+?></div>
+<?php echo $this->formElement($form->get('send')) ?>
+
+<?php echo $this->form()->closeTag() ?>

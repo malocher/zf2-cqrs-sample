@@ -53,6 +53,9 @@ return array(
         ),
     ),
     'service_manager' => array(
+        'invokables' => array(
+            'todo_reader_service' => 'Application\ReadModel\TodoReaderService'
+        ),
         'abstract_factories' => array(
             'Zend\Cache\Service\StorageCacheAbstractServiceFactory',
             'Zend\Log\LoggerAbstractServiceFactory',
@@ -75,6 +78,13 @@ return array(
         'invokables' => array(
             'Application\Controller\Index' => 'Application\Controller\IndexController'
         ),
+        'factories' => array(
+            'Application\Controller\Todo' => function($cl) {
+                $c = new \Application\Controller\TodoController();
+                $c->setGate($cl->getServiceLocator()->get('cqrs.gate'));
+                return $c;
+            }
+        )
     ),
     'view_manager' => array(
         'display_not_found_reason' => true,
@@ -91,6 +101,21 @@ return array(
         'template_path_stack' => array(
             __DIR__ . '/../view',
         ),
+    ),
+    'cqrs' => array(
+        'adapters' => array(
+            array(
+                'class' => 'Cqrs\Adapter\ArrayMapAdapter',
+                'buses' => array(
+                    'Application\Cqrs\Bus\DomainBus' => array(
+                        'Application\Cqrs\Query\GetAllOpenTodosQuery' => array(
+                            'alias' => 'todo_reader_service',
+                            'method' => 'getAllOpenTodos'
+                        )
+                    )
+                )
+            )
+        )
     ),
     // Placeholder for console routes
     'console' => array(
