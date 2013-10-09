@@ -18,8 +18,20 @@ class TodoReaderService
 {
     use \Cqrs\Adapter\AdapterTrait;
     
+    protected $openTodosFile = 'data/open-todos.json';
+    
+    protected $openTodos = array();
+
+
+    public function __construct()
+    {
+        if (file_exists($this->openTodosFile)) {
+            $this->openTodos = json_decode(file_get_contents($this->openTodosFile), true);
+        }
+    }
+
     public function getAllOpenTodos(GetAllOpenTodosQuery $query)
     {
-        return array();
+        return $this->openTodos;
     }
 }

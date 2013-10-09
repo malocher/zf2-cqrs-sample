@@ -1,3 +1,8 @@
 <div class="jumbotron">
     <h1>My todos</h1>
 </div>
+<ul>
+<?php foreach ($this->todos as $todo): ?>
+    <li><?php echo $todo['title']; ?></li>
+<?php endforeach; ?>
+</ul>
