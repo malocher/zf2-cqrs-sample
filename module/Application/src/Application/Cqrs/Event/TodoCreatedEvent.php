@@ -11,7 +11,7 @@ namespace Application\Cqrs\Event;
 use Cqrs\Event\EventInterface;
 use Cqrs\Message\Message;
 /**
- *  TodoCreatedEvent
+ * Event TodoCreatedEvent
  * 
  * @author Alexander Miertsch <kontakt@codeliner.ws>
  */

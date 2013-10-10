@@ -20,17 +20,13 @@ return array(
                     ),
                 ),
             ),
-            // The following is a route to simplify getting started creating
-            // new controllers and actions without needing to create a new
-            // module. Simply drop new controllers in, and you can access them
-            // using the path /application/:controller/:action
-            'application' => array(
+            'todo' => array(
                 'type'    => 'Literal',
                 'options' => array(
-                    'route'    => '/application',
+                    'route'    => '/todo',
                     'defaults' => array(
                         '__NAMESPACE__' => 'Application\Controller',
-                        'controller'    => 'Index',
+                        'controller'    => 'Todo',
                         'action'        => 'index',
                     ),
                 ),
@@ -39,10 +35,10 @@ return array(
                     'default' => array(
                         'type'    => 'Segment',
                         'options' => array(
-                            'route'    => '/[:controller[/:action]]',
+                            'route'    => '/[:action[/:filter]]',
                             'constraints' => array(
-                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'filter'     => '[a-zA-Z0-9_-]*',
                             ),
                             'defaults' => array(
                             ),
@@ -119,9 +115,17 @@ return array(
                             'alias' => 'todo_repository',
                             'method' => 'createTodo'
                         ),
+                        'Application\Cqrs\Command\CloseTodoCommand' => array(
+                            'alias' => 'todo_repository',
+                            'method' => 'closeTodo'
+                        ),
                         'Application\Cqrs\Event\TodoCreatedEvent' => array(
                             'alias' => 'todo_reader_service',
                             'method' => 'onTodoCreated'
+                        ),
+                        'Application\Cqrs\Event\TodoClosedEvent' => array(
+                            'alias' => 'todo_reader_service',
+                            'method' => 'onTodoClosed'
                         ),
                         'Application\Cqrs\Query\GetAllOpenTodosQuery' => array(
                             'alias' => 'todo_reader_service',

@@ -4,12 +4,13 @@
 <div class="row">
 <?php foreach ($this->todos as $todo): ?>
     <div class="col-md-12">
-        <div class="panel panel-success">
+        <div class="panel panel-info">
             <div class="panel-heading">
                 <h3 class="panel-title"><?php echo $this->escapeHtml($todo['title']); ?></h3>
             </div>
             <div class="panel-body">
                 <p><?php echo $this->escapeHtml($todo['description']); ?></p>
+                <p><a class="btn btn-success pull-left" href="<?php echo $this->url('todo/default', array('action' => 'close', 'filter' => $todo['id'])) ; ?>"><?php echo $this->translate('done') ?></a><a class="btn btn-danger pull-right" href="<?php echo $this->url('todo/default', array('action' => 'cancel', 'filter' => $todo['id'])) ; ?>"><?php echo $this->translate('cancel') ?></a></p>
             </div>
         </div>
     </div>
@@ -18,6 +19,6 @@
 <p></p>
 <div class="row">
     <div class="col-md-12">
-        <a class="btn btn-success btn-lg" href="/application/todo/add" target="_blank"><?php echo $this->translate('add TODO') ?> &raquo;</a>
+        <a class="btn btn-info btn-lg" href="<?php echo $this->url('todo/default', array('action' => 'add')) ; ?>"><?php echo $this->translate('add TODO') ?> &raquo;</a>
     </div>
 </div>

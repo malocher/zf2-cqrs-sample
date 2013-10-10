@@ -13,6 +13,7 @@ use Zend\View\Model\ViewModel;
 use Cqrs\Gate;
 use Application\Cqrs\Query\GetAllOpenTodosQuery;
 use Application\Cqrs\Command\CreateTodoCommand;
+use Application\Cqrs\Command\CloseTodoCommand;
 use Application\Cqrs\Bus\DomainBus;
 use Application\Form\TodoForm;
 
@@ -54,7 +55,7 @@ class TodoController extends AbstractActionController
                 
                 $this->gate->getBus(DomainBus::NAME)->invokeCommand($createTodoCommand);
                 
-                return $this->redirect()->toUrl('/application/todo');
+                return $this->redirect()->toUrl('/todo');
             } else {
                 return new ViewModel(['form' => $todoForm]);
             }
@@ -62,6 +63,17 @@ class TodoController extends AbstractActionController
             return new ViewModel(['form' => $todoForm]);
         }
         
+    }
+    
+    public function closeAction()
+    {
+        $todoId = $this->getEvent()->getRouteMatch()->getParam('filter');
+        
+        $closeTodoCommand = new CloseTodoCommand($todoId);
+        
+        $this->gate->getBus(DomainBus::NAME)->invokeCommand($closeTodoCommand);
+        
+        return $this->redirect()->toUrl('/todo');
     }
 }
 

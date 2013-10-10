@@ -10,6 +10,7 @@ namespace Application\ReadModel;
 
 use Application\Cqrs\Query\GetAllOpenTodosQuery;
 use Application\Cqrs\Event\TodoCreatedEvent;
+use Application\Cqrs\Event\TodoClosedEvent;
 
 /**
  * ReadModel Class TodoReaderService
@@ -22,34 +23,75 @@ class TodoReaderService
     
     protected $openTodosFile = 'data/open-todos.json';
     
+    protected $closedTodosFile = 'data/closed-todos.json';
+
+
     protected $openTodos = array();
+    
+    protected $closedTodos = array();
+    
+    public function onTodoCreated(TodoCreatedEvent $event) 
+    {
+        $this->addToOpenTodos($event->getPayload());
+    }
+    
+    public function onTodoClosed(TodoClosedEvent $event)
+    {
+        $this->addToClosedTodos($event->getTodoId());
+    }
 
-
-    public function __construct()
+    public function getAllOpenTodos(GetAllOpenTodosQuery $query)
+    {
+        $this->loadOpenTodos();
+        return $this->openTodos;
+    }
+    
+    protected function loadOpenTodos()
     {
         if (file_exists($this->openTodosFile)) {
             $this->openTodos = json_decode(file_get_contents($this->openTodosFile), true);
         }
     }
     
-    public function onTodoCreated(TodoCreatedEvent $event) 
+    protected function loadClosedTodos()
     {
-        $this->addToOpenTodos($event->getPayload());
+        if (file_exists($this->closedTodosFile)) {
+            $this->closedTodos = json_decode(file_get_contents($this->closedTodosFile), true);
+        }
+    }
+    
+    protected function loadAllTodos()
+    {
+        $this->loadOpenTodos();
+        $this->loadClosedTodos();
     }
 
-    public function getAllOpenTodos(GetAllOpenTodosQuery $query)
-    {
-        return $this->openTodos;
-    }
-    
+
     protected function addToOpenTodos(array $todoData)
     {
+        $this->loadOpenTodos();
         $this->openTodos[$todoData['id']] = $todoData;
-        $this->writeTodosToFile();
+        $this->writeOpenTodosToFile();
     }
     
-    protected function writeTodosToFile()
+    protected function addToClosedTodos($todoId)
+    {
+        $this->loadAllTodos();
+        $todoData = $this->openTodos[$todoId];
+        unset($this->openTodos[$todoId]);
+        $todoData['state'] = 'closed';
+        $this->closedTodos[$todoId] = $todoData;
+        $this->writeOpenTodosToFile();
+        $this->writeClosedTodosToFile();
+    }
+    
+    protected function writeOpenTodosToFile()
     {
         file_put_contents($this->openTodosFile, json_encode($this->openTodos));
+    }
+    
+    protected function writeClosedTodosToFile()
+    {
+        file_put_contents($this->closedTodosFile, json_encode($this->closedTodos));
     }
 }

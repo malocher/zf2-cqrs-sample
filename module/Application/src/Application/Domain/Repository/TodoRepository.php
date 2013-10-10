@@ -9,10 +9,12 @@
 namespace Application\Domain\Repository;
 
 use Application\Cqrs\Command\CreateTodoCommand;
+use Application\Cqrs\Command\CloseTodoCommand;
 use Application\Cqrs\Event\TodoCreatedEvent;
+use Application\Cqrs\Event\TodoClosedEvent;
 use Application\Cqrs\Payload\TodoPayload;
-use Application\Cqrs\Bus\DomainBus;
 use Application\Domain\Entity\EntityFactory;
+use Application\Domain\Entity\Todo;
 /**
  *  TodoRepository
  * 
@@ -49,15 +51,52 @@ class TodoRepository
         
         $todoCreatedEvent = new TodoCreatedEvent($todoPayload);
         
-        $this->getBus(DomainBus::NAME)->publishEvent($todoCreatedEvent);
+        $this->getBus()->publishEvent($todoCreatedEvent);
     }
     
- 
+    public function getTodo($todoId) 
+    {
+        $todo = new Todo($todoId);
+        
+        $todoData = $this->readFile($todoId);
+        
+        $todo->setTitle($todoData['title']);
+        $todo->setDescription($todoData['description']);
+        $todo->setState($todoData['state']);
+        
+        return $todo;
+    }
+    
+    public function closeTodo(CloseTodoCommand $command)
+    {
+        $todo = $this->getTodo($command->getTodoId());
+        $todo->close();
+        
+        $todoPayload = new TodoPayload();
+        $todoPayload->extractFromEntity($todo);
+        
+        $this->writeToFile($todoPayload);
+        
+        $todoClosedEvent = new TodoClosedEvent($command->getTodoId());
+        $this->getBus()->publishEvent($todoClosedEvent);
+    }
+    
+    protected function readFile($todoId)
+    {
+        return json_decode(file_get_contents($this->storageDir . $todoId . '.json'), true);        
+    }
+    
+    
     protected function writeToFile(TodoPayload $payload)
     {
         file_put_contents(
             $this->storageDir . $payload->getId() . '.json', 
             json_encode($payload->getArrayCopy())
         );
+    }
+    
+    protected function deleteFile($todoId) 
+    {
+        unlink($this->storageDir . $todoId . '.json');
     }
 }
