@@ -119,6 +119,10 @@ return array(
                             'alias' => 'todo_repository',
                             'method' => 'createTodo'
                         ),
+                        'Application\Cqrs\Event\TodoCreatedEvent' => array(
+                            'alias' => 'todo_reader_service',
+                            'method' => 'onTodoCreated'
+                        ),
                         'Application\Cqrs\Query\GetAllOpenTodosQuery' => array(
                             'alias' => 'todo_reader_service',
                             'method' => 'getAllOpenTodos'

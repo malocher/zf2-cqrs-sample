@@ -9,6 +9,8 @@
 namespace Application\ReadModel;
 
 use Application\Cqrs\Query\GetAllOpenTodosQuery;
+use Application\Cqrs\Event\TodoCreatedEvent;
+
 /**
  * ReadModel Class TodoReaderService
  * 
@@ -29,9 +31,25 @@ class TodoReaderService
             $this->openTodos = json_decode(file_get_contents($this->openTodosFile), true);
         }
     }
+    
+    public function onTodoCreated(TodoCreatedEvent $event) 
+    {
+        $this->addToOpenTodos($event->getPayload());
+    }
 
     public function getAllOpenTodos(GetAllOpenTodosQuery $query)
     {
         return $this->openTodos;
+    }
+    
+    protected function addToOpenTodos(array $todoData)
+    {
+        $this->openTodos[$todoData['id']] = $todoData;
+        $this->writeTodosToFile();
+    }
+    
+    protected function writeTodosToFile()
+    {
+        file_put_contents($this->openTodosFile, json_encode($this->openTodos));
     }
 }

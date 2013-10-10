@@ -9,8 +9,9 @@
 namespace Application\Domain\Repository;
 
 use Application\Cqrs\Command\CreateTodoCommand;
+use Application\Cqrs\Event\TodoCreatedEvent;
 use Application\Cqrs\Payload\TodoPayload;
-use Application\Domain\Entity\Todo;
+use Application\Cqrs\Bus\DomainBus;
 use Application\Domain\Entity\EntityFactory;
 /**
  *  TodoRepository
@@ -21,7 +22,7 @@ class TodoRepository
 {
     use \Cqrs\Adapter\AdapterTrait;
     
-    protected $storageFile = 'data/todos.json';
+    protected $storageDir = 'data/todos/';
     
     protected $todosData = array();
     
@@ -30,14 +31,6 @@ class TodoRepository
      * @var EntityFactory
      */
     protected $entityFactory;
-
-
-    public function __construct()
-    {
-        if (file_exists($this->storageFile)) {
-            $this->todosData = json_decode(file_get_contents($this->storageFile), true);
-        }
-    }
     
     public function setEntityFactory(EntityFactory $factory) 
     {
@@ -48,16 +41,23 @@ class TodoRepository
     public function createTodo(CreateTodoCommand $command)
     {
         $todo = $this->entityFactory->createNewTodo($command->getPayload());
+        
         $todoPayload = new TodoPayload();
         $todoPayload->extractFromEntity($todo);
         
-        $this->todosData[$todo->getId()] = $todoPayload->getArrayCopy();
-        $this->updateFile();
+        $this->writeToFile($todoPayload);
+        
+        $todoCreatedEvent = new TodoCreatedEvent($todoPayload);
+        
+        $this->getBus(DomainBus::NAME)->publishEvent($todoCreatedEvent);
     }
     
  
-    protected function updateFile()
+    protected function writeToFile(TodoPayload $payload)
     {
-        file_put_contents($this->storageFile, json_encode($this->todosData));
+        file_put_contents(
+            $this->storageDir . $payload->getId() . '.json', 
+            json_encode($payload->getArrayCopy())
+        );
     }
 }
