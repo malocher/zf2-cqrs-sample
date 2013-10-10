@@ -4,18 +4,17 @@ $form->prepare();
 
 $form->setAttribute('method', 'post');
 
-echo $this->form()->openTag($form);
-?>
-<div class="form_element">
-<?php
-    $title = $form->get('title');
-    echo $this->formRow($title);
-?></div>
-<div class="form_element">
-<?php
-    $description = $form->get('description');
-    echo $this->formRow($description);
-?></div>
-<?php echo $this->formElement($form->get('send')) ?>
 
-<?php echo $this->form()->closeTag() ?>
+
+echo $this->form()->openTag($form);
+
+$title = $form->get('title');
+echo $this->ztbFormElement($title);
+
+
+$description = $form->get('description');
+echo $this->ztbFormElement($description);
+
+echo $this->ztbFormElement($form->get('send'));
+
+echo $this->form()->closeTag();

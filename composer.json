@@ -11,7 +11,8 @@
     "require": {
         "php": ">=5.4",
         "zendframework/zendframework": "2.2.*",
-        "codeliner/zf2-cqrs-module" : "dev-master"
+        "codeliner/zf2-cqrs-module" : "dev-master",
+        "mwillbanks/zfc-twitter-bootstrap" : "dev-master"
     },
     "minimum-stability": "dev"
 }

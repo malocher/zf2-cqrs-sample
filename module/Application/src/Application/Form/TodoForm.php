@@ -27,13 +27,20 @@ class TodoForm extends Form
             'options' => array(
                 'label' => 'Title',
             ),
+            'attributes' => array(
+                'class' => 'form-control',
+            ),
             'type'  => 'Text',
+            
         ));
         
         $this->add(array(
             'name' => 'description',
             'options' => array(
                 'label' => 'Description',
+            ),
+            'attributes' => array(
+                'class' => 'form-control',
             ),
             'type'  => 'Textarea',
         ));
@@ -43,6 +50,7 @@ class TodoForm extends Form
             'type'  => 'Submit',
             'attributes' => array(
                 'value' => 'Submit',
+                'class' => 'btn btn-default'
             ),
         ));
     }
