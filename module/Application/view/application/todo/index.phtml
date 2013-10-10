@@ -1,8 +1,23 @@
 <div class="jumbotron">
     <h1>My TODOs</h1>
 </div>
-<ul>
+<div class="row">
 <?php foreach ($this->todos as $todo): ?>
-    <li><?php echo $todo['title']; ?></li>
+    <div class="col-md-12">
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <h3 class="panel-title"><?php echo $this->escapeHtml($todo['title']); ?></h3>
+            </div>
+            <div class="panel-body">
+                <p><?php echo $this->escapeHtml($todo['description']); ?></p>
+            </div>
+        </div>
+    </div>
 <?php endforeach; ?>
-</ul>
+</div>
+<p></p>
+<div class="row">
+    <div class="col-md-12">
+        <a class="btn btn-success btn-lg" href="/application/todo/add" target="_blank"><?php echo $this->translate('add TODO') ?> &raquo;</a>
+    </div>
+</div>

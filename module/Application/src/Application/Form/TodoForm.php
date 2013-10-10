@@ -50,7 +50,7 @@ class TodoForm extends Form
             'type'  => 'Submit',
             'attributes' => array(
                 'value' => 'Submit',
-                'class' => 'btn btn-default'
+                'class' => 'btn btn-success'
             ),
         ));
     }
