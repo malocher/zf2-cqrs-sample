@@ -10,8 +10,10 @@ namespace Application\Domain\Repository;
 
 use Application\Cqrs\Command\CreateTodoCommand;
 use Application\Cqrs\Command\CloseTodoCommand;
+use Application\Cqrs\Command\CancelTodoCommand;
 use Application\Cqrs\Event\TodoCreatedEvent;
 use Application\Cqrs\Event\TodoClosedEvent;
+use Application\Cqrs\Event\TodoCanceledEvent;
 use Application\Cqrs\Payload\TodoPayload;
 use Application\Domain\Entity\EntityFactory;
 use Application\Domain\Entity\Todo;
@@ -54,19 +56,6 @@ class TodoRepository
         $this->getBus()->publishEvent($todoCreatedEvent);
     }
     
-    public function getTodo($todoId) 
-    {
-        $todo = new Todo($todoId);
-        
-        $todoData = $this->readFile($todoId);
-        
-        $todo->setTitle($todoData['title']);
-        $todo->setDescription($todoData['description']);
-        $todo->setState($todoData['state']);
-        
-        return $todo;
-    }
-    
     public function closeTodo(CloseTodoCommand $command)
     {
         $todo = $this->getTodo($command->getTodoId());
@@ -79,6 +68,28 @@ class TodoRepository
         
         $todoClosedEvent = new TodoClosedEvent($command->getTodoId());
         $this->getBus()->publishEvent($todoClosedEvent);
+    }
+    
+    public function cancelTodo(CancelTodoCommand $command) 
+    {
+        $this->deleteFile($command->getTodoId());
+        
+        $todoCanceledEvent = new TodoCanceledEvent($command->getTodoId());
+        
+        $this->getBus()->publishEvent($todoCanceledEvent);
+    }
+    
+    public function getTodo($todoId) 
+    {
+        $todo = new Todo($todoId);
+        
+        $todoData = $this->readFile($todoId);
+        
+        $todo->setTitle($todoData['title']);
+        $todo->setDescription($todoData['description']);
+        $todo->setState($todoData['state']);
+        
+        return $todo;
     }
     
     protected function readFile($todoId)

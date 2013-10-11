@@ -1,5 +1,4 @@
 <?php
-
 /*
  * This file is part of the codeliner/zf2-cqrs-sample package.
  * (c) Alexander Miertsch <kontakt@codeliner.ws>

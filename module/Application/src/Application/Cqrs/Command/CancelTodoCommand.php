@@ -10,12 +10,13 @@ namespace Application\Cqrs\Command;
 
 use Cqrs\Command\CommandInterface;
 use Cqrs\Message\Message;
+
 /**
- * Command CloseTodoCommand
+ * Command CancelTodoCommand
  * 
  * @author Alexander Miertsch <kontakt@codeliner.ws>
  */
-class CloseTodoCommand extends Message implements CommandInterface
+class CancelTodoCommand extends Message implements CommandInterface
 {
     public function __construct($payload = null, $id = null, $timestamp = null, $version = 1.0)
     {

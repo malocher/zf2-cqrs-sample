@@ -56,12 +56,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/crafics/cqrs-php.git",
-                "reference": "c35cb0cb81513b5f5cd28459e2eb8cd70725804d"
+                "reference": "8728f487173cfb6b4e1835f47a60d46038bd1d9a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/crafics/cqrs-php/zipball/c35cb0cb81513b5f5cd28459e2eb8cd70725804d",
-                "reference": "c35cb0cb81513b5f5cd28459e2eb8cd70725804d",
+                "url": "https://api.github.com/repos/crafics/cqrs-php/zipball/8728f487173cfb6b4e1835f47a60d46038bd1d9a",
+                "reference": "8728f487173cfb6b4e1835f47a60d46038bd1d9a",
                 "shasum": ""
             },
             "require-dev": {
@@ -98,7 +98,7 @@
                 "framework",
                 "php"
             ],
-            "time": "2013-10-09 20:26:27"
+            "time": "2013-10-11 19:51:10"
         },
         {
             "name": "mwillbanks/zfc-twitter-bootstrap",

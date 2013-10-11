@@ -106,6 +106,7 @@ return array(
         ),
     ),
     'cqrs' => array(
+        'default_bus' => 'domain-bus',
         'adapters' => array(
             array(
                 'class' => 'Cqrs\Adapter\ArrayMapAdapter',
@@ -119,6 +120,10 @@ return array(
                             'alias' => 'todo_repository',
                             'method' => 'closeTodo'
                         ),
+                        'Application\Cqrs\Command\CancelTodoCommand' => array(
+                            'alias' => 'todo_repository',
+                            'method' => 'cancelTodo'
+                        ),
                         'Application\Cqrs\Event\TodoCreatedEvent' => array(
                             'alias' => 'todo_reader_service',
                             'method' => 'onTodoCreated'
@@ -127,9 +132,21 @@ return array(
                             'alias' => 'todo_reader_service',
                             'method' => 'onTodoClosed'
                         ),
+                        'Application\Cqrs\Event\TodoCanceledEvent' => array(
+                            'alias' => 'todo_reader_service',
+                            'method' => 'onTodoCanceled'
+                        ),
                         'Application\Cqrs\Query\GetAllOpenTodosQuery' => array(
                             'alias' => 'todo_reader_service',
                             'method' => 'getAllOpenTodos'
+                        ),
+                        'Application\Cqrs\Query\GetAllClosedTodosQuery' => array(
+                            'alias' => 'todo_reader_service',
+                            'method' => 'getAllClosedTodos'
+                        ),
+                        'Application\Cqrs\Query\GetAllTodosQuery' => array(
+                            'alias' => 'todo_reader_service',
+                            'method' => 'getAllTodos'
                         )
                     )
                 )

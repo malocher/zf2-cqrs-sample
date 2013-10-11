@@ -2,6 +2,19 @@
     <h1>My TODOs</h1>
 </div>
 <div class="row">
+    <div class="col-md-12">
+        <div class="btn-group">
+            <a class="btn btn-danger <?php echo ($this->filter == 'open')? 'active' : ''; ?>" href="<?php echo $this->url('todo/default', array('action' => 'index', 'filter' => 'open')) ; ?>"
+               ><?php echo $this->translate('open') ?></a>
+            <a class="btn btn-success <?php echo ($this->filter == 'closed')? 'active' : ''; ?>" href="<?php echo $this->url('todo/default', array('action' => 'index', 'filter' => 'closed')) ; ?>"
+               ><?php echo $this->translate('closed') ?></a>
+            <a class="btn btn-default <?php echo ($this->filter == 'all')? 'active' : ''; ?>" href="<?php echo $this->url('todo/default', array('action' => 'index', 'filter' => 'all')) ; ?>"
+               ><?php echo $this->translate('all') ?></a>
+        </div>
+    </div>
+</div>
+<p></p>
+<div class="row">
 <?php foreach ($this->todos as $todo): ?>
     <div class="col-md-12">
         <div class="panel panel-info">
@@ -10,7 +23,9 @@
             </div>
             <div class="panel-body">
                 <p><?php echo $this->escapeHtml($todo['description']); ?></p>
+                <?php if ($todo['state'] == 'open') : ?>
                 <p><a class="btn btn-success pull-left" href="<?php echo $this->url('todo/default', array('action' => 'close', 'filter' => $todo['id'])) ; ?>"><?php echo $this->translate('done') ?></a><a class="btn btn-danger pull-right" href="<?php echo $this->url('todo/default', array('action' => 'cancel', 'filter' => $todo['id'])) ; ?>"><?php echo $this->translate('cancel') ?></a></p>
+                <?php endif; ?>
             </div>
         </div>
     </div>

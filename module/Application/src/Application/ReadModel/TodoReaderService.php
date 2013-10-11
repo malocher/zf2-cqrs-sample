@@ -9,8 +9,11 @@
 namespace Application\ReadModel;
 
 use Application\Cqrs\Query\GetAllOpenTodosQuery;
+use Application\Cqrs\Query\GetAllClosedTodosQuery;
+use Application\Cqrs\Query\GetAllTodosQuery;
 use Application\Cqrs\Event\TodoCreatedEvent;
 use Application\Cqrs\Event\TodoClosedEvent;
+use Application\Cqrs\Event\TodoCanceledEvent;
 
 /**
  * ReadModel Class TodoReaderService
@@ -39,11 +42,39 @@ class TodoReaderService
     {
         $this->addToClosedTodos($event->getTodoId());
     }
+    
+    public function onTodoCanceled(TodoCanceledEvent $event)
+    {
+        $this->loadAllTodos();
+        
+        if (isset($this->openTodos[$event->getTodoId()])) {
+            unset($this->openTodos[$event->getTodoId()]);
+            $this->writeOpenTodosToFile();
+        }
+        
+        if (isset($this->closedTodos[$event->getTodoId()])) {
+            unset($this->closedTodos[$event->getTodoId()]);
+            $this->writeClosedTodosToFile();
+        }
+    }
 
     public function getAllOpenTodos(GetAllOpenTodosQuery $query)
     {
         $this->loadOpenTodos();
         return $this->openTodos;
+    }
+    
+    public function getAllClosedTodos(GetAllClosedTodosQuery $query)
+    {
+        $this->loadClosedTodos();
+        return $this->closedTodos;
+    }
+    
+    public function getAllTodos(GetAllTodosQuery $query)
+    {
+        $this->loadAllTodos();
+        
+        return $this->openTodos + $this->closedTodos;
     }
     
     protected function loadOpenTodos()

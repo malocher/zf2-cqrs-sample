@@ -6,16 +6,17 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace Application\Cqrs\Command;
+namespace Application\Cqrs\Event;
 
-use Cqrs\Command\CommandInterface;
+use Cqrs\Event\EventInterface;
 use Cqrs\Message\Message;
+
 /**
- * Command CloseTodoCommand
+ * Event TodoCanceledEvent
  * 
  * @author Alexander Miertsch <kontakt@codeliner.ws>
  */
-class CloseTodoCommand extends Message implements CommandInterface
+class TodoCanceledEvent extends Message implements EventInterface
 {
     public function __construct($payload = null, $id = null, $timestamp = null, $version = 1.0)
     {
