@@ -1,12 +1,15 @@
 <?php
-/**
- * Zend Framework (http://framework.zend.com/)
+/*
+ * This file is part of the codeliner/zf2-cqrs-sample package.
+ * (c) Alexander Miertsch <kontakt@codeliner.ws>
  *
- * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
+/**
+ * Module configuration for the application module (main module)
+ */
 return array(
     'router' => array(
         'routes' => array(
@@ -20,6 +23,11 @@ return array(
                     ),
                 ),
             ),
+            /*
+             * All todo routes start with /todo
+             * following by an action: index, add, close, cancel
+             * and an optional filter (a query filter for index action, todoId in case of close and cancel action)
+             */
             'todo' => array(
                 'type'    => 'Literal',
                 'options' => array(
@@ -48,6 +56,15 @@ return array(
             ),
         ),
     ),
+    /*
+     * The service manager acts as CQRS handler- and listener loader
+     * 
+     * The defined aliases todo_reader_service and todo_repository are used
+     * in the CQRS configuration {@see below}
+     * 
+     * Each class in your application can be a CQRS CommandHandler, QueryHandler or EventListener,
+     * if it can be received from service manager
+     */
     'service_manager' => array(
         'invokables' => array(
             'todo_reader_service' => 'Application\ReadModel\TodoReaderService'
@@ -81,6 +98,14 @@ return array(
         'invokables' => array(
             'Application\Controller\Index' => 'Application\Controller\IndexController'
         ),
+        /*
+         * The CQRS Gate can be received from main service manager
+         * 
+         * In this controller callback factory we get the controller loader as argument.
+         * The main service manager is accessible via getServiceLocator getter and
+         * finally we can inject the CQRS Gate into controller with calling the get method
+         * on the service manager with the CQRS Gate alias "cqrs.gate" as argument.
+         */
         'factories' => array(
             'Application\Controller\Todo' => function($cl) {
                 $c = new \Application\Controller\TodoController();
@@ -105,14 +130,50 @@ return array(
             __DIR__ . '/../view',
         ),
     ),
+    /*
+     * You can use the full set of configuration options provided by cqrs-php
+     * {@see https://github.com/crafics/cqrs-php/tree/master/iterations/Iteration}
+     * 
+     * Put everything under the key cqrs. 
+     * The codeliner/zf2-cqrs-module pass the configuration to Cqrs\Configuration\Setup,
+     * first time you request the cqrs.gate from the service manager.
+     */
     'cqrs' => array(
+        /*
+         * We use only one bus in this example and set it as default, so we can
+         * call $cqrsGate->getBus() without the need to tell the gate wich bus we want to get.
+         * 
+         * You could also have multiple buses, f.e. an extra error bus, a frontend bus, 
+         * or a bus for each domain (if you have more than one)
+         */
         'default_bus' => 'domain-bus',
         'adapters' => array(
+            /**
+             * CQRS Adapters help you to setup your system.
+             * We use the ArrayMapAdapter here. It is a very simple Adapter.
+             * We have to map comands, queries and events to handlers and listeners
+             * by hand. 
+             * 
+             * There are other adapters available, f.e. an AnnotationAdapter or an Adapter
+             * that works with coneventions to do the mapping. 
+             */
             array(
                 'class' => 'Cqrs\Adapter\ArrayMapAdapter',
                 'buses' => array(
+                    /*
+                     * Register all commands, queries and events on the DomainBus
+                     */
                     'Application\Cqrs\Bus\DomainBus' => array(
+                        /*
+                         * Each Adapter has it's own configuration structure.
+                         * The ArrayMapAdapter needs complete mapping information
+                         * for each cqrs message (command, query, event) 
+                         */
                         'Application\Cqrs\Command\CreateTodoCommand' => array(
+                            /*
+                             * The alias of a handler or listener should match to
+                             * an alias used within the service manager.
+                             */
                             'alias' => 'todo_repository',
                             'method' => 'createTodo'
                         ),
@@ -152,12 +213,5 @@ return array(
                 )
             )
         )
-    ),
-    // Placeholder for console routes
-    'console' => array(
-        'router' => array(
-            'routes' => array(
-            ),
-        ),
     ),
 );
