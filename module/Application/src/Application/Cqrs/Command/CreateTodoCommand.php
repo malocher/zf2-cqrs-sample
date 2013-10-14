@@ -12,10 +12,16 @@ use Cqrs\Command\CommandInterface;
 use Cqrs\Message\Message;
 
 /**
- *  CreateTodoCommand
+ * Command CreateTodoCommand
  * 
  * @author Alexander Miertsch <kontakt@codeliner.ws>
  */
 class CreateTodoCommand extends Message implements CommandInterface
-{ 
+{
+    /*
+     * This is just a marker class, so that all cqrs components can differentiate
+     * between the messages. Every command, event and query has to be a cqrs message.
+     * First the specific interface marks it as one of the three types.
+     * The Cqrs\Message\Message provides all required default functionality.
+     */
 }
