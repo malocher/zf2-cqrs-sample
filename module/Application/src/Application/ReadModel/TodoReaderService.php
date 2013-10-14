@@ -18,6 +18,21 @@ use Application\Cqrs\Event\TodoCanceledEvent;
 /**
  * ReadModel Class TodoReaderService
  * 
+ * This ReadModel is seperated from our domain logic. It listens on the various 
+ * todo events to keep it's view information up to date.
+ * To achieve fast response times, the ReadModel store the data in the way the 
+ * frontend needs it to display. In other words: the TodoController wants to display
+ * the open todos, the closed todos or both and therefor the ReadModel maintain to files
+ * data/open-todos.json and data/closed-todos.json. 
+ * 
+ * If it has to ask the domain for all open todos, the TodoRepository has to load each todo,
+ * check the state and at it to a collection if state is open. This would be a very slow
+ * process compared to the snapshot approach that is used here.
+ * 
+ * On the other site, the ReadModel should not know anything about the todo rules (DRY principle). When is
+ * a todo open and when is it closed? The model only knows that a new todo is
+ * always open and when a todo is closed a TodoClosedEvent is triggered.
+ * 
  * @author Alexander Miertsch <kontakt@codeliner.ws>
  */
 class TodoReaderService

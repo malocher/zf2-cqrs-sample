@@ -23,56 +23,105 @@ class Todo
     
     protected $state = 'open';
     
+    /**
+     * Constructor
+     * 
+     * @param int $id
+     */
     public function __construct($id)
     {
         $this->id = $id;
     }
     
+    /**
+     * 
+     * @return int
+     */
     public function getId()
     {
         return $this->id;
     }
     
+    /**
+     * 
+     * @return string
+     */
     public function getTitle()
     {
         return $this->title;
     }
 
+    /**
+     * 
+     * @param string $title
+     * @return void
+     */
     public function setTitle($title)
     {
         $this->title = $title;
     }
 
+    /**
+     * 
+     * @return string
+     */
     public function getDescription()
     {
         return $this->description;
     }
 
+    /**
+     * 
+     * @param string $description
+     * @return void
+     */
     public function setDescription($description)
     {
         $this->description = $description;
     }
 
+    /**
+     * 
+     * @return string
+     */
     public function getState()
     {
         return $this->state;
     }
 
+    /**
+     * 
+     * @param string $state
+     * @return void
+     */
     public function setState($state)
     {
         $this->state = $state;
     }
     
+    /**
+     * Change state to <done>
+     * 
+     * @return void
+     */
     public function close() 
     {
         $this->state = 'done';
     }
     
+    /**
+     * 
+     * @return boolean
+     */
     public function is_open() 
     {
         return $this->state == 'open';
     }
     
+    /**
+     * 
+     * @return boolean
+     */
     public function is_done()
     {
         return $this->state == 'done';
