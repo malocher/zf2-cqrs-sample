@@ -113,7 +113,7 @@ class Todo
      * 
      * @return boolean
      */
-    public function is_open() 
+    public function isOpen() 
     {
         return $this->state == 'open';
     }
@@ -122,7 +122,7 @@ class Todo
      * 
      * @return boolean
      */
-    public function is_done()
+    public function isDone()
     {
         return $this->state == 'done';
     }

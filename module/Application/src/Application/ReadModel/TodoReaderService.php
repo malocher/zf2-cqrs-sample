@@ -55,7 +55,7 @@ class TodoReaderService
     
     public function onTodoClosed(TodoClosedEvent $event)
     {
-        $this->addToClosedTodos($event->getTodoId());
+        $this->addToClosedTodos($event->getTodoId(), $event->getNewTodoState());
     }
     
     public function onTodoCanceled(TodoCanceledEvent $event)
@@ -120,12 +120,12 @@ class TodoReaderService
         $this->writeOpenTodosToFile();
     }
     
-    protected function addToClosedTodos($todoId)
+    protected function addToClosedTodos($todoId, $newState)
     {
         $this->loadAllTodos();
         $todoData = $this->openTodos[$todoId];
         unset($this->openTodos[$todoId]);
-        $todoData['state'] = 'closed';
+        $todoData['state'] = $newState;
         $this->closedTodos[$todoId] = $todoData;
         $this->writeOpenTodosToFile();
         $this->writeClosedTodosToFile();

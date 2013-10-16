@@ -96,7 +96,8 @@ class TodoRepository
         
         $this->writeToFile($todoPayload);
         
-        $todoClosedEvent = new TodoClosedEvent($command->getTodoId());
+        $eventData = array('id' => $todo->getId(), 'state' => $todo->getState());
+        $todoClosedEvent = new TodoClosedEvent($eventData);
         $this->getBus()->publishEvent($todoClosedEvent);
     }
     
