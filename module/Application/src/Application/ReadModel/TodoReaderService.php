@@ -39,25 +39,63 @@ class TodoReaderService
 {
     use \Cqrs\Adapter\AdapterTrait;
     
+    /**
+     *
+     * @var string 
+     */
     protected $openTodosFile = 'data/open-todos.json';
     
+    /**
+     *
+     * @var string 
+     */
     protected $closedTodosFile = 'data/closed-todos.json';
 
-
+    /**
+     *
+     * @var array
+     */
     protected $openTodos = array();
     
+    /**
+     *
+     * @var array
+     */
     protected $closedTodos = array();
     
+    /**
+     * Listener for the TodoCreatedEvent
+     * 
+     * Adds the created todo to the list of open todos
+     * 
+     * @param TodoCreatedEvent $event
+     * @return void
+     */
     public function onTodoCreated(TodoCreatedEvent $event) 
     {
         $this->addToOpenTodos($event->getPayload());
     }
     
+    /**
+     * Listener for the TodoClosedEvent
+     * 
+     * Moves the todo from the open list to the closed list
+     * 
+     * @param TodoClosedEvent $event
+     * @return void
+     */
     public function onTodoClosed(TodoClosedEvent $event)
     {
         $this->addToClosedTodos($event->getTodoId(), $event->getNewTodoState());
     }
     
+    /**
+     * Listener for the TodoCanceledEvent
+     * 
+     * Removes the todo from the lists
+     * 
+     * @param TodoCanceledEvent $event
+     */
     public function onTodoCanceled(TodoCanceledEvent $event)
     {
         $this->loadAllTodos();
@@ -73,18 +111,36 @@ class TodoReaderService
         }
     }
 
+    /**
+     * Get a list of all open todos
+     * 
+     * @param GetAllOpenTodosQuery $query
+     * @return array
+     */
     public function getAllOpenTodos(GetAllOpenTodosQuery $query)
     {
         $this->loadOpenTodos();
         return $this->openTodos;
     }
     
+    /**
+     * Get a list of all closed todos
+     * 
+     * @param GetAllClosedTodosQuery $query
+     * @return array
+     */
     public function getAllClosedTodos(GetAllClosedTodosQuery $query)
     {
         $this->loadClosedTodos();
         return $this->closedTodos;
     }
     
+    /**
+     * Get a list of open and closed todos
+     * 
+     * @param GetAllTodosQuery $query
+     * @return array
+     */
     public function getAllTodos(GetAllTodosQuery $query)
     {
         $this->loadAllTodos();
@@ -92,6 +148,11 @@ class TodoReaderService
         return $this->openTodos + $this->closedTodos;
     }
     
+    /**
+     * Load open todos from file and cache them internaly
+     * 
+     * @return void
+     */
     protected function loadOpenTodos()
     {
         if (file_exists($this->openTodosFile)) {
@@ -99,6 +160,11 @@ class TodoReaderService
         }
     }
     
+    /**
+     * Load closed todos from file and cache them internaly
+     * 
+     * @return void
+     */
     protected function loadClosedTodos()
     {
         if (file_exists($this->closedTodosFile)) {
@@ -106,13 +172,23 @@ class TodoReaderService
         }
     }
     
+    /**
+     * Load open and closed todos from file and cache them internaly
+     * 
+     * @return void
+     */
     protected function loadAllTodos()
     {
         $this->loadOpenTodos();
         $this->loadClosedTodos();
     }
 
-
+    /**
+     * Add todo data to list of open todos
+     * 
+     * @param array $todoData
+     * @return void
+     */
     protected function addToOpenTodos(array $todoData)
     {
         $this->loadOpenTodos();
@@ -120,6 +196,12 @@ class TodoReaderService
         $this->writeOpenTodosToFile();
     }
     
+    /**
+     * Move todo data from open todo list to closed list and set new todo state
+     * 
+     * @param array $todoData
+     * @return void
+     */
     protected function addToClosedTodos($todoId, $newState)
     {
         $this->loadAllTodos();
@@ -131,11 +213,21 @@ class TodoReaderService
         $this->writeClosedTodosToFile();
     }
     
+    /**
+     * Write cached open todo list to file
+     * 
+     * @return void
+     */
     protected function writeOpenTodosToFile()
     {
         file_put_contents($this->openTodosFile, json_encode($this->openTodos));
     }
     
+    /**
+     * Write cached closed todo list to file
+     * 
+     * @return void
+     */
     protected function writeClosedTodosToFile()
     {
         file_put_contents($this->closedTodosFile, json_encode($this->closedTodos));
