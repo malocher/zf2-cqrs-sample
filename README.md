@@ -35,3 +35,11 @@ directory:
 
 This will start the cli-server on port 8080, and bind it to all network
 interfaces.
+
+Documentation
+-------------
+We've placed comments and explanations everywhere in the sourcecode. Use Github to
+browse to the code and also checkout the various README.md files in the sub directories.
+
+A good starting point is the application module configuration. 
+You can find it in [https://github.com/codeliner/zf2-cqrs-sample/blob/master/module/Application/config/module.config.php](module/Application/config/module.config.php).
