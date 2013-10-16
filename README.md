@@ -3,7 +3,7 @@ zf2-cqrs-sample
 
 Introduction
 ------------
-This is a simple TODO application using ZF2 and crafics/cqrs-php. This application is meant to be used as a starting place for those
+This is a simple TODO application using [ZF2](http://framework.zend.com/) and [crafics/cqrs-php](https://github.com/crafics/cqrs-php). This application is meant to be used as a starting place for those
 looking to get their feet wet with CQRS in a ZF2 Project.
 
 

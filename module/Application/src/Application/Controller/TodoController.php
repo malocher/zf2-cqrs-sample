@@ -133,7 +133,7 @@ class TodoController extends AbstractActionController
          * The payload of the command is only the todoId. Possible payload values
          * for every cqrs message (command, query, event) are all scalar values, arrays
          * and instances of the Cqrs\Payload\PayloadInterface. 
-         * If any other object tye is passed to a message, it throws an exception.
+         * If any other object type is passed to a message, it throws an exception.
          * The reason for this, a message must be immutable.
          */
         $closeTodoCommand = new CloseTodoCommand($todoId);
