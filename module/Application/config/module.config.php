@@ -59,7 +59,7 @@ return array(
     /*
      * The service manager acts as CQRS handler- and listener loader
      * 
-     * The defined aliases todo_reader_service and todo_repository are used
+     * The defined aliases todo_reader_service and todo_command_handler are used
      * in the CQRS configuration {@see below}
      * 
      * Each class in your application can be a CQRS CommandHandler, QueryHandler or EventListener,
@@ -67,13 +67,17 @@ return array(
      */
     'service_manager' => array(
         'invokables' => array(
-            'todo_reader_service' => 'Application\ReadModel\TodoReaderService'
+            'todo_reader_service' => 'Application\ReadModel\TodoReaderService',
+            'todo_repository'     => 'Application\Domain\Repository\TodoRepository',
+            'entity_factory'      => 'Application\Domain\Entity\EntityFactory',
         ),
         'factories' => array(
-            'todo_repository' => function($sl) {
-                $todoRepository = new \Application\Domain\Repository\TodoRepository();
-                $todoRepository->setEntityFactory(new \Application\Domain\Entity\EntityFactory());
-                return $todoRepository;
+            'todo_command_handler' => function($sl) {
+                $todoCommandHandler = new \Application\Domain\CommandHandler\TodoCommandHandler();
+                $todoCommandHandler->setTodoRepository($sl->get('todo_repository'));
+                $todoCommandHandler->setEntityFactory($sl->get('entity_factory'));
+                
+                return $todoCommandHandler;
             }
         ),
         'abstract_factories' => array(
@@ -174,15 +178,15 @@ return array(
                              * The alias of a handler or listener should match to
                              * an alias used within the service manager.
                              */
-                            'alias' => 'todo_repository',
+                            'alias' => 'todo_command_handler',
                             'method' => 'createTodo'
                         ),
                         'Application\Cqrs\Command\CloseTodoCommand' => array(
-                            'alias' => 'todo_repository',
+                            'alias' => 'todo_command_handler',
                             'method' => 'closeTodo'
                         ),
                         'Application\Cqrs\Command\CancelTodoCommand' => array(
-                            'alias' => 'todo_repository',
+                            'alias' => 'todo_command_handler',
                             'method' => 'cancelTodo'
                         ),
                         'Application\Cqrs\Event\TodoCreatedEvent' => array(

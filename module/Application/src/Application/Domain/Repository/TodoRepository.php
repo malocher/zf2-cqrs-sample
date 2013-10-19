@@ -8,15 +8,9 @@
  */
 namespace Application\Domain\Repository;
 
-use Application\Cqrs\Command\CreateTodoCommand;
-use Application\Cqrs\Command\CloseTodoCommand;
-use Application\Cqrs\Command\CancelTodoCommand;
-use Application\Cqrs\Event\TodoCreatedEvent;
-use Application\Cqrs\Event\TodoClosedEvent;
-use Application\Cqrs\Event\TodoCanceledEvent;
 use Application\Cqrs\Payload\TodoPayload;
-use Application\Domain\Entity\EntityFactory;
 use Application\Domain\Entity\Todo;
+
 /**
  * Repository TodoRepository
  * 
@@ -31,90 +25,20 @@ use Application\Domain\Entity\Todo;
  */
 class TodoRepository
 {
-    use \Cqrs\Adapter\AdapterTrait;
-    
     protected $storageDir = 'data/todos/';
     
-    protected $todosData = array();
-    
     /**
-     *
-     * @var EntityFactory
-     */
-    protected $entityFactory;
-    
-    /**
-     * Set the entity factory
+     * Persist a todo
      * 
-     * Even when the TodoRepository is loaded to handle a command, the dependencies
-     * are injected by it's factory, cause the TodoRepository is loaded via ServiceManager
-     * 
-     * @param EntityFactory $factory
+     * @param Todo $todo
      * @return void
      */
-    public function setEntityFactory(EntityFactory $factory) 
+    public function saveTodo(Todo $todo)
     {
-        $this->entityFactory = $factory;
-    }
-
-
-    /**
-     * Handle the CreateTodoCommand
-     * 
-     * @param    CreateTodoCommand $command
-     * @triggers TodoCreatedEvent
-     * @return   void
-     */
-    public function createTodo(CreateTodoCommand $command)
-    {
-        $todo = $this->entityFactory->createNewTodo($command->getPayload());
-        
         $todoPayload = new TodoPayload();
         $todoPayload->extractFromEntity($todo);
         
         $this->writeToFile($todoPayload);
-        
-        $todoCreatedEvent = new TodoCreatedEvent($todoPayload);
-        
-        $this->getBus()->publishEvent($todoCreatedEvent);
-    }
-    
-    /**
-     * Handle the CloseTodoCommand
-     * 
-     * @param    CloseTodoCommand $command
-     * @triggers TodoClosedEvent
-     * @return   void
-     */
-    public function closeTodo(CloseTodoCommand $command)
-    {
-        $todo = $this->getTodo($command->getTodoId());
-        $todo->close();
-        
-        $todoPayload = new TodoPayload();
-        $todoPayload->extractFromEntity($todo);
-        
-        $this->writeToFile($todoPayload);
-        
-        $eventData = array('id' => $todo->getId(), 'state' => $todo->getState());
-        $todoClosedEvent = new TodoClosedEvent($eventData);
-        $this->getBus()->publishEvent($todoClosedEvent);
-    }
-    
-    /**
-     * Handle the CancelTodoCommand
-     * 
-     * @param    CancelTodoCommand $command
-     * @triggers TodoCanceledEvent
-     * @return   void
-     */
-    public function cancelTodo(CancelTodoCommand $command) 
-    {
-        $this->deleteFile($command->getTodoId());
-        
-        $todoCanceledEvent = new TodoCanceledEvent($command->getTodoId());
-        
-        $this->getBus()->publishEvent($todoCanceledEvent);
     }
     
     /**
@@ -137,6 +61,17 @@ class TodoRepository
     }
     
     /**
+     * Remove todo from storage
+     * 
+     * @param Todo $todo
+     * @return void
+     */
+    public function removeTodo(Todo $todo)
+    {
+        $this->deleteFile($todo->getId());
+    }
+
+        /**
      * Read todo data from file
      * 
      * @param int $todoId
