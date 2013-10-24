@@ -115,9 +115,9 @@ class TodoCommandHandler
     {
         $todo = $this->todoRepository->getTodo($command->getId());
         
-        $this->todoRepository->removeTodo($todo);
+        $todo->cancle();
         
-        unset($todo);
+        $this->todoRepository->saveTodo($todo);
         
         $todoCanceledEvent = new TodoCanceledEvent($command->getTodoId());
         

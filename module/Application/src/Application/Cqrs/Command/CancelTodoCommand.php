@@ -31,7 +31,7 @@ class CancelTodoCommand extends Message implements CommandInterface
      */
     public function __construct($payload = null, $id = null, $timestamp = null, $version = 1.0)
     {
-        //We want to unify the payload, put first we call the parent contructor
+        //We want to unify the payload, but first we call the parent constructor
         //to check if payload is valid
         parent::__construct($payload, $id, $timestamp, $version);
         

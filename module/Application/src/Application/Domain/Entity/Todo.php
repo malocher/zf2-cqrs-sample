@@ -110,6 +110,16 @@ class Todo
     }
     
     /**
+     * Change state to <canceled>
+     * 
+     * @return void
+     */
+    public function cancle() 
+    {
+        $this->state = 'canceled';
+    }
+    
+    /**
      * 
      * @return boolean
      */
