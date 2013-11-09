@@ -11,12 +11,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/codeliner/zf2-cqrs-module.git",
-                "reference": "f635bfdf4009b83a54a07518396c4c13048e39a9"
+                "reference": "f7c3d98564f9ba877789c2a9afd0e91a460d544c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/codeliner/zf2-cqrs-module/zipball/f635bfdf4009b83a54a07518396c4c13048e39a9",
-                "reference": "f635bfdf4009b83a54a07518396c4c13048e39a9",
+                "url": "https://api.github.com/repos/codeliner/zf2-cqrs-module/zipball/f7c3d98564f9ba877789c2a9afd0e91a460d544c",
+                "reference": "f7c3d98564f9ba877789c2a9afd0e91a460d544c",
                 "shasum": ""
             },
             "require": {
@@ -48,7 +48,7 @@
                 "framework",
                 "zf2"
             ],
-            "time": "2013-10-08 20:01:10"
+            "time": "2013-10-16 21:18:04"
         },
         {
             "name": "crafics/cqrs-php",
@@ -56,12 +56,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/crafics/cqrs-php.git",
-                "reference": "8728f487173cfb6b4e1835f47a60d46038bd1d9a"
+                "reference": "b2780542f84ac7b474b30e1481f15f7cb8f7686c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/crafics/cqrs-php/zipball/8728f487173cfb6b4e1835f47a60d46038bd1d9a",
-                "reference": "8728f487173cfb6b4e1835f47a60d46038bd1d9a",
+                "url": "https://api.github.com/repos/crafics/cqrs-php/zipball/b2780542f84ac7b474b30e1481f15f7cb8f7686c",
+                "reference": "b2780542f84ac7b474b30e1481f15f7cb8f7686c",
                 "shasum": ""
             },
             "require-dev": {
@@ -98,7 +98,7 @@
                 "framework",
                 "php"
             ],
-            "time": "2013-10-11 19:51:10"
+            "time": "2013-11-09 20:48:41"
         },
         {
             "name": "mwillbanks/zfc-twitter-bootstrap",
@@ -157,12 +157,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zf2.git",
-                "reference": "dd327e7fbea8b70a3ed8277d3a386b1359b51f58"
+                "reference": "51243078310e795719d488174503a43e00d931a5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zf2/zipball/dd327e7fbea8b70a3ed8277d3a386b1359b51f58",
-                "reference": "dd327e7fbea8b70a3ed8277d3a386b1359b51f58",
+                "url": "https://api.github.com/repos/zendframework/zf2/zipball/51243078310e795719d488174503a43e00d931a5",
+                "reference": "51243078310e795719d488174503a43e00d931a5",
                 "shasum": ""
             },
             "require": {
@@ -223,6 +223,7 @@
             },
             "require-dev": {
                 "doctrine/annotations": ">=1.0",
+                "fabpot/php-cs-fixer": "*@dev",
                 "ircmaxell/random-lib": "dev-master",
                 "ircmaxell/security-lib": "dev-master",
                 "ocramius/proxy-manager": "0.4.*",
@@ -263,7 +264,7 @@
                 "framework",
                 "zf2"
             ],
-            "time": "2013-10-09 07:43:12"
+            "time": "2013-11-07 15:26:47"
         }
     ],
     "packages-dev": [

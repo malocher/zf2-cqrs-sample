@@ -161,8 +161,7 @@ return array(
              * There are other adapters available, f.e. an AnnotationAdapter or an Adapter
              * that works with coneventions to do the mapping. 
              */
-            array(
-                'class' => 'Cqrs\Adapter\ArrayMapAdapter',
+            'Cqrs\Adapter\ArrayMapAdapter' => array(                
                 'buses' => array(
                     /*
                      * Register all commands, queries and events on the DomainBus
