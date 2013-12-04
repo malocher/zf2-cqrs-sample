@@ -24,7 +24,7 @@ use Application\Domain\Repository\TodoRepository;
  */
 class TodoCommandHandler
 {
-    use \Cqrs\Adapter\AdapterTrait;
+    use \Malocher\Cqrs\Adapter\AdapterTrait;
     
     /**
      *

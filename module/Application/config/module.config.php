@@ -113,7 +113,7 @@ return array(
         'factories' => array(
             'Application\Controller\Todo' => function($cl) {
                 $c = new \Application\Controller\TodoController();
-                $c->setGate($cl->getServiceLocator()->get('cqrs.gate'));
+                $c->setGate($cl->getServiceLocator()->get('malocher.cqrs.gate'));
                 return $c;
             }
         )
@@ -136,7 +136,7 @@ return array(
     ),
     /*
      * You can use the full set of configuration options provided by cqrs-php
-     * {@see https://github.com/crafics/cqrs-php/tree/master/iterations/Iteration}
+     * {@see https://github.com/malocher/cqrs-esb/tree/master/iterations/Iteration}
      * 
      * Put everything under the key cqrs. 
      * The codeliner/zf2-cqrs-module pass the configuration to Cqrs\Configuration\Setup,
@@ -161,7 +161,7 @@ return array(
              * There are other adapters available, f.e. an AnnotationAdapter or an Adapter
              * that works with coneventions to do the mapping. 
              */
-            'Cqrs\Adapter\ArrayMapAdapter' => array(                
+            'Malocher\Cqrs\Adapter\ArrayMapAdapter' => array(                
                 'buses' => array(
                     /*
                      * Register all commands, queries and events on the DomainBus

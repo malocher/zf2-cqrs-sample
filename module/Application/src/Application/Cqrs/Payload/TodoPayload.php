@@ -8,7 +8,7 @@
  */
 namespace Application\Cqrs\Payload;
 
-use Cqrs\Message\PayloadInterface;
+use Malocher\Cqrs\Message\PayloadInterface;
 use Application\Domain\Entity\Todo;
 /**
  *  TodoPayload

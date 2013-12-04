@@ -37,7 +37,7 @@ use Application\Cqrs\Event\TodoCanceledEvent;
  */
 class TodoReaderService
 {
-    use \Cqrs\Adapter\AdapterTrait;
+    use \Malocher\Cqrs\Adapter\AdapterTrait;
     
     /**
      *

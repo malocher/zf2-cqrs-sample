@@ -8,7 +8,7 @@
  */
 namespace Application\Cqrs\Bus;
 
-use Cqrs\Bus\AbstractBus;
+use Malocher\Cqrs\Bus\AbstractBus;
 /**
  * CQRS Bus DomainBus
  * 

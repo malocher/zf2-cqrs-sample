@@ -3,8 +3,8 @@ zf2-cqrs-sample
 
 Introduction
 ------------
-This is a simple TODO application using [ZF2](http://framework.zend.com/) and [crafics/cqrs-php](https://github.com/crafics/cqrs-php). This application is meant to be used as a starting place for those
-looking to get their feet wet with CQRS in a ZF2 Project.
+This is a simple TODO application using [ZF2](http://framework.zend.com/) and [malocher/cqrs-esb](https://github.com/malocher/cqrs-esb). This application is meant to be used as a starting place for those
+looking to get their feet wet with CQRS and an Enterprise Service Bus in a ZF2 Project.
 
 
 Installation
@@ -17,7 +17,7 @@ clone the repository and manually invoke `composer` using the shipped
 `composer.phar`:
 
     cd my/project/dir
-    git clone git://github.com/codeliner/zf2-cqrs-sample.git
+    git clone git://github.com/malocher/zf2-cqrs-sample.git
     cd zf2-cqrs-sample
     php composer.phar self-update
     php composer.phar install
@@ -42,4 +42,4 @@ We've placed comments and explanations everywhere in the sourcecode. Use Github 
 browse to the code and also check out the various README.md files in the sub directories.
 
 A good starting point is the application module configuration. 
-You can find it in [module/Application/config/module.config.php](https://github.com/codeliner/zf2-cqrs-sample/blob/master/module/Application/config/module.config.php).
+You can find it in [module/Application/config/module.config.php](https://github.com/malocher/zf2-cqrs-sample/blob/master/module/Application/config/module.config.php).

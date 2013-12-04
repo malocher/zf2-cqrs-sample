@@ -1,6 +1,6 @@
 {
-    "name": "codeliner/zf2-cqrs-sample",
-    "description": "Sample TODO App using zf2 and crafics/cqrs-php",
+    "name": "malocher/zf2-cqrs-sample",
+    "description": "Sample TODO App using zf2 and malocher/cqrs-esb",
     "license": "BSD-3-Clause",
     "keywords": [
         "application",
@@ -11,7 +11,7 @@
     "require": {
         "php": ">=5.4",
         "zendframework/zendframework": "2.2.*",
-        "codeliner/zf2-cqrs-module" : "dev-master",
+        "malocher/zf2-cqrs-module" : "dev-master",
         "mwillbanks/zfc-twitter-bootstrap" : "dev-master"
     },
     "minimum-stability": "dev"

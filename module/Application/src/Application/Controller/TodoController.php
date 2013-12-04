@@ -10,7 +10,7 @@ namespace Application\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-use Cqrs\Gate;
+use Malocher\Cqrs\Gate;
 use Application\Cqrs\Query\GetAllOpenTodosQuery;
 use Application\Cqrs\Query\GetAllClosedTodosQuery;
 use Application\Cqrs\Query\GetAllTodosQuery;
@@ -112,7 +112,7 @@ class TodoController extends AbstractActionController
                  */
                 $this->gate->getBus()->invokeCommand($createTodoCommand);
                 
-                return $this->redirect()->toUrl('/todo');
+                return $this->redirect()->toRoute('todo');
             }
             
         }
@@ -145,7 +145,7 @@ class TodoController extends AbstractActionController
          */
         $this->gate->getBus()->invokeCommand($closeTodoCommand);
         
-        return $this->redirect()->toUrl('/todo');
+        return $this->redirect()->toRoute('todo');
     }
     
     /**
@@ -161,7 +161,7 @@ class TodoController extends AbstractActionController
         
         $this->gate->getBus()->invokeCommand($cancelTodoCommand);
         
-        return $this->redirect()->toUrl('/todo');
+        return $this->redirect()->toRoute('todo');
     }
 }
 

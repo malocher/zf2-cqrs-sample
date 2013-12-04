@@ -9,8 +9,8 @@
  */
 namespace Application\Cqrs\Query;
 
-use Cqrs\Query\QueryInterface;
-use Cqrs\Message\Message;
+use Malocher\Cqrs\Query\QueryInterface;
+use Malocher\Cqrs\Message\Message;
 
 /**
  * Query GetAllClosedTodosQuery
