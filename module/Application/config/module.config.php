@@ -135,17 +135,17 @@ return array(
         ),
     ),
     /*
-     * You can use the full set of configuration options provided by cqrs-php
+     * You can use the full set of configuration options provided by malocher/cqrs-esb
      * {@see https://github.com/malocher/cqrs-esb/tree/master/iterations/Iteration}
      * 
      * Put everything under the key cqrs. 
-     * The codeliner/zf2-cqrs-module pass the configuration to Cqrs\Configuration\Setup,
-     * first time you request the cqrs.gate from the service manager.
+     * The malocher/zf2-cqrs-module pass the configuration to Malocher\Cqrs\Configuration\Setup,
+     * first time you request the malocher.cqrs.gate from the service manager.
      */
     'cqrs' => array(
         /*
          * We use only one bus in this example and set it as default, so we can
-         * call $cqrsGate->getBus() without the need to tell the gate wich bus we want to get.
+         * call $malocherCqrsGate->getBus() without the need to tell the gate wich bus we want to get.
          * 
          * You could also have multiple buses, f.e. an extra error bus, a frontend bus, 
          * or a bus for each domain (if you have more than one)
