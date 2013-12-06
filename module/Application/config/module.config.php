@@ -108,7 +108,7 @@ return array(
          * In this controller callback factory we get the controller loader as argument.
          * The main service manager is accessible via getServiceLocator getter and
          * finally we can inject the CQRS Gate into controller with calling the get method
-         * on the service manager with the CQRS Gate alias "cqrs.gate" as argument.
+         * on the service manager with the CQRS Gate alias "malocher.cqrs.gate" as argument.
          */
         'factories' => array(
             'Application\Controller\Todo' => function($cl) {
