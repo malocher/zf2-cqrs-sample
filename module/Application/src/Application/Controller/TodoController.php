@@ -36,7 +36,7 @@ class TodoController extends AbstractActionController
     /**
      * Gate Setter
      * 
-     * @param \Cqrs\Gate $gate
+     * @param Gate $gate
      */
     public function setGate(Gate $gate) 
     {
@@ -102,7 +102,7 @@ class TodoController extends AbstractActionController
                  * Just send the command over the default bus 
                  *(Application\Cqrs\Bus\DomainBus like configured in configuration)
                  * 
-                 * The TodoRepository takes the command and creates a new todo.
+                 * The TodoCommandHanlder takes the command and creates a new todo.
                  * If everything works fine, it publish a TodoCreatedEvent and
                  * the TodoReaderService updates it's view with the new information.
                  * Look at the implementations for more details.
@@ -132,7 +132,7 @@ class TodoController extends AbstractActionController
         /*
          * The payload of the command is only the todoId. Possible payload values
          * for every cqrs message (command, query, event) are all scalar values, arrays
-         * and instances of the Cqrs\Payload\PayloadInterface. 
+         * and instances of the Malocher\Cqrs\Payload\PayloadInterface. 
          * If any other object type is passed to a message, it throws an exception.
          * The reason for this, a message must be immutable.
          */
