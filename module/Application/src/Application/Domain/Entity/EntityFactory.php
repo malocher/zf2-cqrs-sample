@@ -8,26 +8,65 @@
  */
 namespace Application\Domain\Entity;
 
+use Zend\Stdlib\Exception\InvalidArgumentException;
+use Zend\Stdlib\Hydrator\ClassMethods;
+
 /**
- *  EntityFactory
+ * EntityFactory
  * 
  * @author Alexander Miertsch <kontakt@codeliner.ws>
  */
-class EntityFactory
+class EntityFactory extends ClassMethods
 {
     /**
-     * Create an todo
+     * Create a todo
      * 
+     * @param  array $data
      * @return Todo
      */
-    public function createNewTodo($data)
+    public function createNewTodo(array $data)
     {
-        $todo = new Todo(uniqid());
+        // override/specify defaults for new instances
+        $data['id']    = uniqid();
+        $data['state'] = 'open';
+        return $this->hydrate($data, null);
+    }
+    
+    /**
+     * Extract a Todo object into an array
+     * 
+     * @param  Todo $todo the object to extract
+     * @return array
+     * @throws InvalidArgumentException when the object is not a Todo
+     */
+    public function extract($todo)
+    {
+        if (!$todo instanceof Todo) {
+            $message = sprintf(
+                "Extraction object must be an instance of Todo, %s given",
+                is_object($todo) ? get_class($todo) : gettype($todo)
+            );
+            throw new InvalidArgumentException($message);
+        }
         
-        $todo->setTitle($data['title']);
-        $todo->setDescription($data['description']);
-        $todo->setState('open');
+        return parent::extract($todo);
+    }
+    
+    /**
+     * Hydrate a Todo object with array data.
+     * 
+     * If the object is not a Todo, a new Todo will be instanciated.
+     * 
+     * @param  array $data   the hydration data
+     * @param  Todo  $object the object to hydrate
+     * @return Todo
+     */
+    public function hydrate(array $data, $object)
+    {
+        if (!$object instanceof Todo) {
+            $object = new Todo(isset($data['id']) ? $data['id'] : uniqid());
+        }
         
-        return $todo;
+        return parent::hydrate($data, $object);
     }
 }
